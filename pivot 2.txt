@@ -1,0 +1,11 @@
+select * from crosstab(
+	$$
+	select d.name , z.name , count(c.id) filter (where z.id = d.id_zone) from distrito d
+	inner join cliente c on d.id = c.id_district
+	cross join zona z
+group by 1, 2
+	$$,
+	$$
+	select name from zona z
+	$$
+) as (name varchar, norte varchar, sul varchar, leste varchar, oeste varchar);
